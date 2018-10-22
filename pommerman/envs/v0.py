@@ -11,6 +11,7 @@ import time
 from gym import spaces
 from gym.utils import seeding
 import gym
+import random
 
 from .. import characters
 from .. import constants
@@ -157,8 +158,10 @@ class Pomme(gym.Env):
     def _get_info(self, done, rewards):
         return self.model.get_info(done, rewards, self._game_type, self._agents)
 
-    def reset(self):
+    def reset(self, seed=None):
         assert (self._agents is not None)
+        if seed is not None:
+            self.seed(seed)
 
         if self._init_game_state is not None:
             self.set_json_info()
@@ -181,6 +184,9 @@ class Pomme(gym.Env):
     def seed(self, seed=None):
         gym.spaces.prng.seed(seed)
         self.np_random, seed = seeding.np_random(seed)
+        random.seed(seed)
+        np.random.seed(seed)
+
         return [seed]
 
     def step(self, actions):
