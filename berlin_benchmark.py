@@ -26,6 +26,7 @@ def main():
     nof_plays = 100
     # Run the episodes just like OpenAI Gym
     for i_episode in range(nof_plays):
+        print("Game " + str(i_episode))
         state = env.reset(i_episode)
         done = False
         while not done:
