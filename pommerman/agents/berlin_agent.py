@@ -46,7 +46,7 @@ class BerlinAgent(BaseAgent):
         Args:
           reward: The single reward scalar to this agent.
         """
-        self.c.c_episode_end_cologne.restype = ctypes.c_float
+        self.c.c_episode_end_berlin.restype = ctypes.c_float
         avg_simsteps_per_turn = self.c.c_episode_end_berlin(self.id)
         self.avg_simsteps_per_turns.append(avg_simsteps_per_turn)
 
