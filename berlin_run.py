@@ -12,10 +12,10 @@ def main():
 
     # Create a set of agents (exactly four)
     agent_list = [
-        agents.SimpleAgent(),
         agents.BerlinAgent(),
-        agents.SimpleAgent(),
-        agents.SimpleAgent(),
+        agents.CologneAgent(),
+        agents.BerlinAgent(),
+        agents.BerlinAgent(),
         # agents.DockerAgent("pommerman/simple-agent", port=12345),
     ]
     # Make the "Free-For-All" environment using the agent list

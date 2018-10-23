@@ -6,4 +6,5 @@ from .player_agent import PlayerAgent
 from .random_agent import RandomAgent
 from .simple_agent import SimpleAgent
 from .berlin_agent import BerlinAgent
+from .cologne_agent import CologneAgent
 from .tensorforce_agent import TensorForceAgent
