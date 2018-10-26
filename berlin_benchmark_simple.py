@@ -12,9 +12,9 @@ def main():
 
     # Create a set of agents (exactly four)
     agent_list = [
-        agents.BerlinAgent(),
+        agents.SimpleAgent(),
         agents.CologneAgent(),
-        agents.BerlinAgent(),
+        agents.SimpleAgent(),
         agents.CologneAgent(),
         # agents.DockerAgent("pommerman/simple-agent", port=12345),
     ]
@@ -23,11 +23,13 @@ def main():
 
     wins = 0
     ties = 0
-    nof_plays = 40
+    nof_plays = 100
     # Run the episodes just like OpenAI Gym
     for i_episode in range(nof_plays):
         print("Game " + str(i_episode))
         state = env.reset(i_episode)
+        #if i_episode != 20:
+        #    continue
         done = False
         while not done:
             #env.render()
@@ -50,5 +52,5 @@ def main():
 if __name__ == '__main__':
     print(os.getpid())
     import time
-    time.sleep(10)
+    #time.sleep(10)
     main()
