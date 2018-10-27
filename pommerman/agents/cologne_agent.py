@@ -62,4 +62,4 @@ class CologneAgent(BaseAgent):
         return False
 
     def shutdown(self):
-        print("cologne_agent.py shutdown, avg simsteps per turns: ", np.array(self.avg_simsteps_per_turns).mean())
+        print("cologne_agent.py shutdown, avg simsteps per turns: ", np.round(np.array(self.avg_simsteps_per_turns).mean()), " k")

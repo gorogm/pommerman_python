@@ -62,4 +62,4 @@ class BerlinAgent(BaseAgent):
         return False
 
     def shutdown(self):
-        print("berlin_agent.py shutdown, avg simsteps per turns: ", np.array(self.avg_simsteps_per_turns).mean())
+        print("berlin_agent.py  shutdown, avg simsteps per turns: ", np.round(np.array(self.avg_simsteps_per_turns).mean()), " k")
