@@ -54,7 +54,7 @@ class BerlinAgent(BaseAgent):
         self.id = id
         self._character = self._character(id, game_type)
         #self.c = ctypes.cdll.LoadLibrary("/home/gorogm/nips2018-agent/build_cmake/libmunchen.so")
-        self.c = ctypes.cdll.LoadLibrary("/home/AD.ADASWORKS.COM/marton.gorog/Desktop/pommermanmunchen/cmake-build-debug/libmunchen.so")
+        self.c = ctypes.cdll.LoadLibrary("/opt/work/pommermanmunchen/cmake-build-debug/libmunchen.so")
         self.c.c_init_agent_berlin(id)
 
     @staticmethod

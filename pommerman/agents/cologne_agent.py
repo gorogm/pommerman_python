@@ -27,7 +27,7 @@ class CologneAgent(BaseAgent):
         #print(type(obs['position'][0]))
         return self.c.c_getStep_cologne(
             self.id,
-            Item.Agent1 in obs['alive'], Item.Agent2 in obs['alive'], Item.Agent3 in obs['alive'],
+            Item.Agent0.value in obs['alive'], Item.Agent1.value in obs['alive'], Item.Agent2.value in obs['alive'], Item.Agent3.value in obs['alive'],
             obs['board'].ctypes.data_as(ctypes.POINTER(ctypes.c_uint8)), 
             obs['bomb_life'].ctypes.data_as(ctypes.POINTER(ctypes.c_double)), 
             obs['bomb_blast_strength'].ctypes.data_as(ctypes.POINTER(ctypes.c_double)),
@@ -54,7 +54,7 @@ class CologneAgent(BaseAgent):
         self.id = id
         self._character = self._character(id, game_type)
         #self.c = ctypes.cdll.LoadLibrary("/home/gorogm/nips2018-agent/build_cmake/libmunchen.so")
-        self.c = ctypes.cdll.LoadLibrary("/home/AD.ADASWORKS.COM/marton.gorog/Desktop/pommermanmunchen/cmake-build-debug/libmunchen.so")
+        self.c = ctypes.cdll.LoadLibrary("/opt/work/pommermanmunchen/cmake-build-debug/libmunchen.so")
         self.c.c_init_agent_cologne(id)
 
     @staticmethod
