@@ -46,7 +46,7 @@ def main():
             print("Lost with seed: " + str(i_episode))
         print('Episode {} finished'.format(i_episode))
     env.close()
-    print("wins: " + str(wins) + "/" + str(nof_plays - ties) + " = " + (wins / (nof_plays - ties)))
+    print("wins: " + str(wins) + "/" + str(nof_plays - ties) + " = " + str(wins / (nof_plays - ties)))
 
 
 if __name__ == '__main__':
