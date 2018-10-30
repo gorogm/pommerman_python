@@ -23,7 +23,7 @@ def main():
 
     wins = 0
     ties = 0
-    nof_plays = 40
+    nof_plays = 50
     # Run the episodes just like OpenAI Gym
     for i_episode in range(nof_plays):
         print("Game " + str(i_episode))
@@ -44,7 +44,13 @@ def main():
             print("Lost with seed: " + str(i_episode))
         print('Episode {} finished'.format(i_episode))
     env.close()
-    print("wins: " + str(wins) + "/" + str(nof_plays - ties) + " = " + str(wins / (nof_plays - ties)))
+
+    winRatio = str(wins / max(1, (nof_plays - ties)))
+    print("wins: " + str(wins) + "/" + str(nof_plays - ties) + " = " + winRatio)
+
+    file = open("/tmp/hypertune_result.txt", "w")
+    file.write(winRatio)
+    file.close()
 
 
 if __name__ == '__main__':
