@@ -3,9 +3,11 @@ from .. import characters
 from ..constants import *
 import numpy as np
 import ctypes
+import time
 
 class CologneAgent(BaseAgent):
     """Parent abstract Agent."""
+    turn_times = []
 
     def __init__(self, character=characters.Bomber):
         self._character = character
@@ -25,7 +27,8 @@ class CologneAgent(BaseAgent):
         #print(obs['enemies'][0].__dict__) is sent to cpp, because only contains enum ids?
         #print(obs['position'][0])
         #print(type(obs['position'][0]))
-        return self.c.c_getStep_cologne(
+        start_time = time.time()
+        decision = self.c.c_getStep_cologne(
             self.id,
             Item.Agent0.value in obs['alive'], Item.Agent1.value in obs['alive'], Item.Agent2.value in obs['alive'], Item.Agent3.value in obs['alive'],
             obs['board'].ctypes.data_as(ctypes.POINTER(ctypes.c_uint8)), 
@@ -37,6 +40,9 @@ class CologneAgent(BaseAgent):
             obs['ammo'],
             obs['teammate'].value
             )
+        self.turn_times.append(time.time() - start_time)
+
+        return decision
         
 
     def episode_end(self, reward):
@@ -62,4 +68,5 @@ class CologneAgent(BaseAgent):
         return False
 
     def shutdown(self):
-        print("cologne_agent.py shutdown, avg simsteps per turns: ", np.round(np.array(self.avg_simsteps_per_turns).mean())/1000.0, " k")
+        print("cologne_agent.py shutdown, avg simsteps per turns: ", np.round(np.array(self.avg_simsteps_per_turns).mean())/1000.0, " k",
+              ", avg time: ", np.round(np.array(self.turn_times).mean()*1000, 1), " ms")
