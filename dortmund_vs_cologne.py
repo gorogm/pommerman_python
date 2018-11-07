@@ -12,10 +12,10 @@ def main():
 
     # Create a set of agents (exactly four)
     agent_list = [
-        agents.BerlinAgent(),
         agents.CologneAgent(),
-        agents.BerlinAgent(),
+        agents.DortmundAgent(),
         agents.CologneAgent(),
+        agents.DortmundAgent(),
         # agents.DockerAgent("pommerman/simple-agent", port=12345),
     ]
     # Make the "Free-For-All" environment using the agent list
@@ -23,7 +23,7 @@ def main():
 
     wins = 0
     ties = 0
-    nof_plays = 50
+    nof_plays = 100
     # Run the episodes just like OpenAI Gym
     for i_episode in range(nof_plays):
         print("Game " + str(i_episode))

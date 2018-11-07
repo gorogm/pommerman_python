@@ -12,26 +12,41 @@ def main():
 
     # Create a set of agents (exactly four)
     agent_list = [
-        agents.BerlinAgent(),
-        agents.CologneAgent(),
-        agents.BerlinAgent(),
-        agents.BerlinAgent(),
+        agents.SimpleAgent(),
+        agents.DortmundAgent(),
+        agents.SimpleAgent(),
+        agents.DortmundAgent(),
         # agents.DockerAgent("pommerman/simple-agent", port=12345),
     ]
     # Make the "Free-For-All" environment using the agent list
-    env = pommerman.make('PommeTeamCompetition-v0', agent_list)
+    env = pommerman.make('PommeTeamCompetitionFast-v0', agent_list)
 
+    wins = 0
+    ties = 0
+    nof_plays = 300
     # Run the episodes just like OpenAI Gym
-    for i_episode in range(1):
-        state = env.reset(18)
+    for i_episode in range(nof_plays):
+        print("Game " + str(i_episode))
+        state = env.reset(i_episode)
+        #if i_episode != 20:
+        #    continue
         done = False
         while not done:
-            env.render() #record_json_dir='/tmp/'
+            #env.render()
             actions = env.act(state)
             state, reward, done, info = env.step(actions)
         print(info)
+        if info['result'] == pommerman.constants.Result.Tie:
+            ties += 1
+        elif info['winners'] == [1, 3]:
+            wins += 1
+        else:
+            print(info['result'])
+            print(info['winners'])
+            print("Lost with seed: " + str(i_episode))
         print('Episode {} finished'.format(i_episode))
     env.close()
+    print("wins: " + str(wins) + "/" + str(nof_plays - ties) + " = " + str(wins / (nof_plays - ties)))
 
 
 if __name__ == '__main__':

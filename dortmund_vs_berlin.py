@@ -12,10 +12,10 @@ def main():
 
     # Create a set of agents (exactly four)
     agent_list = [
-        agents.SimpleAgent(),
-        agents.CologneAgent(),
-        agents.SimpleAgent(),
-        agents.CologneAgent(),
+        agents.BerlinAgent(),
+        agents.DortmundAgent(),
+        agents.BerlinAgent(),
+        agents.DortmundAgent(),
         # agents.DockerAgent("pommerman/simple-agent", port=12345),
     ]
     # Make the "Free-For-All" environment using the agent list
@@ -28,8 +28,6 @@ def main():
     for i_episode in range(nof_plays):
         print("Game " + str(i_episode))
         state = env.reset(i_episode)
-        #if i_episode != 20:
-        #    continue
         done = False
         while not done:
             #env.render()
@@ -46,11 +44,17 @@ def main():
             print("Lost with seed: " + str(i_episode))
         print('Episode {} finished'.format(i_episode))
     env.close()
-    print("wins: " + str(wins) + "/" + str(nof_plays - ties) + " = " + str(wins / (nof_plays - ties)))
+
+    winRatio = str(wins / max(1, (nof_plays - ties)))
+    print("wins: " + str(wins) + "/" + str(nof_plays - ties) + " = " + winRatio)
+
+    file = open("/tmp/hypertune_result.txt", "w")
+    file.write(winRatio)
+    file.close()
 
 
 if __name__ == '__main__':
     print(os.getpid())
     import time
-    #time.sleep(10)
+    time.sleep(10)
     main()
