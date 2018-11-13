@@ -23,7 +23,6 @@ class CologneAgent(BaseAgent):
         #    print(attr, type(obs[attr]), obs[attr])
         #    if 'numpy' in str(type(obs[attr])):
         #        print(' ', obs[attr].dtype)
-
         
         #print(obs['enemies'][0].__dict__) is sent to cpp, because only contains enum ids?
         #print(obs['position'][0])
@@ -57,9 +56,9 @@ class CologneAgent(BaseAgent):
         avg_simsteps_per_turn = self.c.c_episode_end_cologne(self.id)
         self.avg_simsteps_per_turns.append(avg_simsteps_per_turn)
 
-    def init_agent(self, id, game_type):
-        self.id = id
-        self._character = self._character(id, game_type)
+    def init_agent(self, player_id, game_type):
+        self.id = player_id
+        self._character = self._character(self.id, game_type)
 
         if sys.platform == "win32":
             self.c = ctypes.cdll.LoadLibrary("C:/work/pommermanmunchen/build/Release/munchen.dll")
@@ -67,7 +66,7 @@ class CologneAgent(BaseAgent):
             #self.c = ctypes.cdll.LoadLibrary("/home/gorogm/nips2018-agent/build_cmake/libmunchen.so")
             self.c = ctypes.cdll.LoadLibrary("/opt/work/pommermanmunchen/cmake-build-debug/libmunchen.so")
 
-        self.c.c_init_agent_cologne(id)
+        self.c.c_init_agent_cologne(self.id)
 
     @staticmethod
     def has_user_input():
