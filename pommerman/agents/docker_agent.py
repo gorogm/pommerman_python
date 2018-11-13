@@ -139,9 +139,11 @@ class DockerAgent(BaseAgent):
         except requests.exceptions.Timeout as e:
             print('Timeout!')
             # TODO: Fix this. It's ugly.
-            action = [0] * len(action_space.shape)
-            if len(action) == 1:
-                action = action[0]
+            num_actions = len(action_space.shape)
+            if num_actions > 1:
+                return [0] * num_actions
+            else:
+                return 0
         return action
 
     def episode_end(self, reward):
@@ -154,7 +156,7 @@ class DockerAgent(BaseAgent):
                     "reward": json.dumps(reward, cls=utility.PommermanJSONEncoder)
                 })
         except requests.exceptions.Timeout as e:
-            print('Timeout in shutdown()!')
+            print('Timeout in episode_end()!')
 
     def shutdown(self):
         request_url = "http://localhost:{}/shutdown".format(self._port)

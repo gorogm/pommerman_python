@@ -32,6 +32,9 @@ class DockerAgentRunner(metaclass=abc.ABCMeta):
             observation = json.loads(observation)
 
             observation['teammate'] = constants.Item(observation['teammate'])
+            for enemy_id in range(len(observation['enemies'])):
+                observation['enemies'][enemy_id] = constants.Item(observation['enemies'][enemy_id])
+            observation['position'] = tuple(observation['position'])
             observation['board'] = np.array(observation['board'], dtype=np.uint8)
             observation['bomb_life'] = np.array(observation['bomb_life'], dtype=np.float64)
             observation['bomb_blast_strength'] = np.array(observation['bomb_blast_strength'], dtype=np.float64)
@@ -52,13 +55,13 @@ class DockerAgentRunner(metaclass=abc.ABCMeta):
             self.init_agent(id, game_type)
             return jsonify(success=True)
 
-        @app.route("/shutdown", methods=["GET"])
+        @app.route("/shutdown", methods=["POST"])
         def shutdown(): #pylint: disable=W0612
             '''Requests destruction of any created objects'''
             self.shutdown()
             return jsonify(success=True)
 
-        @app.route("/episode_end", methods=["GET"])
+        @app.route("/episode_end", methods=["POST"])
         def episode_end(): #pylint: disable=W0612
             '''Info about end of a game'''
             data = request.get_json()
