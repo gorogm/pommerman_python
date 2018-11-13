@@ -28,8 +28,13 @@ try:
     LAYER_TOP = pyglet.graphics.OrderedGroup(2)
 except pyglet.canvas.xlib.NoSuchDisplayException as error:
     print("Import error NSDE! You will not be able to render --> %s" % error)
+except pyglet.canvas.xlib.NoSuchDisplayException as error:
+    print("No such display! You will not be able to render --> %s" % error)
 except ImportError as error:
     print("Import error GL! You will not be able to render --> %s" % error)
+except GLException as error:
+    print("Import error GL! You will not be able to render --> %s" % error)
+
 
 from . import constants
 from . import utility
