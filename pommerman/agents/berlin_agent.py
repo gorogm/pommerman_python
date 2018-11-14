@@ -64,8 +64,7 @@ class BerlinAgent(BaseAgent):
         if sys.platform == "win32":
             self.c = ctypes.cdll.LoadLibrary("C:/work/pommermanmunchen/build/Release/munchen.dll")
         else:
-            #self.c = ctypes.cdll.LoadLibrary("/home/gorogm/nips2018-agent/build_cmake/libmunchen.so")
-            self.c = ctypes.cdll.LoadLibrary("/opt/work/pommermanmunchen/cmake-build-debug/libmunchen.so")
+            self.c = ctypes.cdll.LoadLibrary("/opt/work/pommerman_cpp/cmake-build-debug/libmunchen.so")
 
         self.c.c_init_agent_berlin(id)
 
