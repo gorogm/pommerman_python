@@ -23,7 +23,8 @@ def main():
 
     wins = 0
     ties = 0
-    nof_plays = 300
+    survived_agents = []
+    nof_plays = 100
     # Run the episodes just like OpenAI Gym
     for i_episode in range(nof_plays):
         print("Game " + str(i_episode))
@@ -35,6 +36,7 @@ def main():
             #env.render()
             actions = env.act(state)
             state, reward, done, info = env.step(actions)
+
         print(info)
         if info['result'] == pommerman.constants.Result.Tie:
             ties += 1
@@ -45,8 +47,16 @@ def main():
             print(info['winners'])
             print("Lost with seed: " + str(i_episode))
         print('Episode {} finished'.format(i_episode))
+        survived_agents.extend(state[0]['alive'])
     env.close()
-    print("wins: " + str(wins) + "/" + str(nof_plays - ties) + " = " + str(wins / (nof_plays - ties)))
+
+    survived_team_0 = survived_agents.count(10) + survived_agents.count(12)
+    survived_team_1 = survived_agents.count(11) + survived_agents.count(13)
+    kills = nof_plays * 2 - survived_team_0
+    death = nof_plays * 2 - survived_team_1
+    print("kills / death / ratio: ",  kills, " / ", death, " / ", kills/max(0.1, death))
+    winRatio = str(wins / max(1, (nof_plays - ties)))
+    print("wins: " + str(wins) + "/" + str(nof_plays - ties) + " = " + winRatio)
 
 
 if __name__ == '__main__':
