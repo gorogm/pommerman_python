@@ -56,8 +56,11 @@ def main():
     winRatio = str(wins / max(1, (nof_plays - ties)))
     print("wins: " + str(wins) + "/" + str(nof_plays - ties) + " = " + winRatio)
 
-    file = open("/tmp/hypertune_result.txt", "w")
+    file = open("/tmp/hypertune_result_winrate.txt", "w")
     file.write(winRatio)
+    file.close()
+    file = open("/tmp/hypertune_result_kills.txt", "w")
+    file.write(str(kills))
     file.close()
 
 
