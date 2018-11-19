@@ -1,6 +1,7 @@
 import pommerman
 from pommerman import agents
 import os
+import random
 
 def main():
     '''Simple function to bootstrap a game.
@@ -25,6 +26,7 @@ def main():
     ties = 0
     survived_agents = []
     nof_plays = 100
+    randomm = random.randint(0, 100)
     # Run the episodes just like OpenAI Gym
     for i_episode in range(nof_plays):
         print("Game " + str(i_episode))
@@ -59,8 +61,8 @@ def main():
     file = open("/tmp/hypertune_result_winrate.txt", "w")
     file.write(winRatio)
     file.close()
-    file = open("/tmp/hypertune_result_kills.txt", "w")
-    file.write(str(kills))
+    file = open("/tmp/hypertune_result_killdeath_diff.txt", "w")
+    file.write(str(kills - death))
     file.close()
 
 

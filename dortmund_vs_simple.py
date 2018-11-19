@@ -61,8 +61,8 @@ def main():
     file = open("/tmp/hypertune_result_winrate.txt", "w")
     file.write(winRatio)
     file.close()
-    file = open("/tmp/hypertune_result_kills.txt", "w")
-    file.write(str(kills))
+    file = open("/tmp/hypertune_result_killdeath_diff.txt", "w")
+    file.write(str(kills - death))
     file.close()
 
 if __name__ == '__main__':
