@@ -33,7 +33,7 @@ def main():
         #    continue
         done = False
         while not done:
-            env.render()
+            #env.render()
             actions = env.act(state)
             state, reward, done, info = env.step(actions)
 

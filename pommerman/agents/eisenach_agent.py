@@ -74,5 +74,8 @@ class EisenachAgent(BaseAgent):
         return False
 
     def shutdown(self):
-        print("eisenach  shutdown, avg simsteps per turns: ", np.round(np.array(self.avg_simsteps_per_turns).mean())/1000.0, " k",
-              ", avg time: ", np.round(np.array(self.turn_times).mean()*1000, 1), " ms")
+        turn_times_np = np.array(self.turn_times)
+        print("eisenach shutdown, avg simsteps per turns: ", np.round(np.array(self.avg_simsteps_per_turns).mean())/1000.0, " k",
+              ", avg time: ", np.round(turn_times_np.mean()*1000, 1), " ms",
+              ", max time: ", np.round(turn_times_np.max()*1000, 1), " ms",
+              ", overtime: ", np.round((turn_times_np > 0.099).sum() / turn_times_np.shape[0] *100, 1), ' %')
