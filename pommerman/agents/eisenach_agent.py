@@ -6,7 +6,7 @@ import ctypes
 import time
 import sys
 
-class DortmundAgent(BaseAgent):
+class EisenachAgent(BaseAgent):
     """Parent abstract Agent."""
     turn_times = []
 
@@ -29,7 +29,7 @@ class DortmundAgent(BaseAgent):
         #print(obs['position'][0])
         #print(type(obs['position'][0]))
         start_time = time.time()
-        decision = self.c.c_getStep_dortmund(
+        decision = self.c.c_getStep_eisenach(
             self.id,
             Item.Agent0.value in obs['alive'], Item.Agent1.value in obs['alive'], Item.Agent2.value in obs['alive'], Item.Agent3.value in obs['alive'],
             obs['board'].ctypes.data_as(ctypes.POINTER(ctypes.c_uint8)), 
@@ -53,8 +53,8 @@ class DortmundAgent(BaseAgent):
         Args:
           reward: The single reward scalar to this agent.
         """
-        self.c.c_episode_end_dortmund.restype = ctypes.c_float
-        avg_simsteps_per_turn = self.c.c_episode_end_dortmund(self.id)
+        self.c.c_episode_end_eisenach.restype = ctypes.c_float
+        avg_simsteps_per_turn = self.c.c_episode_end_eisenach(self.id)
         self.avg_simsteps_per_turns.append(avg_simsteps_per_turn)
 
     def init_agent(self, id, game_type):
@@ -67,15 +67,12 @@ class DortmundAgent(BaseAgent):
         else:
             self.c = ctypes.cdll.LoadLibrary("/opt/work/pommerman_cpp/cmake-build-debug/libmunchen.so")
 
-        self.c.c_init_agent_dortmund(id)
+        self.c.c_init_agent_eisenach(id)
 
     @staticmethod
     def has_user_input():
         return False
 
     def shutdown(self):
-        turn_times_np = np.array(self.turn_times)
-        print("dortmund shutdown, avg simsteps per turns: ", np.round(np.array(self.avg_simsteps_per_turns).mean())/1000.0, " k",
-              ", avg time: ", np.round(turn_times_np.mean()*1000, 1), " ms",
-              ", max time: ", np.round(turn_times_np.max()*1000, 1), " ms",
-              ", overtime: ", np.round((turn_times_np > 0.099).sum() / turn_times_np.shape[0] *100, 1), ' %')
+        print("eisenach  shutdown, avg simsteps per turns: ", np.round(np.array(self.avg_simsteps_per_turns).mean())/1000.0, " k",
+              ", avg time: ", np.round(np.array(self.turn_times).mean()*1000, 1), " ms")

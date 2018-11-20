@@ -13,9 +13,9 @@ def main():
     # Create a set of agents (exactly four)
     agent_list = [
         agents.SimpleAgent(),
-        agents.DortmundAgent(),
+        agents.EisenachAgent(),
         agents.SimpleAgent(),
-        agents.DortmundAgent(),
+        agents.EisenachAgent(),
         # agents.DockerAgent("pommerman/simple-agent", port=12345),
     ]
     # Make the "Free-For-All" environment using the agent list
@@ -33,7 +33,7 @@ def main():
         #    continue
         done = False
         while not done:
-            #env.render()
+            env.render()
             actions = env.act(state)
             state, reward, done, info = env.step(actions)
 
