@@ -26,7 +26,6 @@ def main():
     ties = 0
     survived_agents = []
     nof_plays = 100
-    randomm = random.randint(0, 100)
     # Run the episodes just like OpenAI Gym
     for i_episode in range(nof_plays):
         print("Game " + str(i_episode))
