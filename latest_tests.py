@@ -1,6 +1,4 @@
-import numpy as np
 import ctypes
-import time
 import sys
 
 if sys.platform == "win32":
@@ -8,6 +6,7 @@ if sys.platform == "win32":
 else:
     c = ctypes.cdll.LoadLibrary("/opt/work/pommerman_cpp/cmake-build-debug/libmunchen.so")
 
+print("loaded shared lib")
 decision = c.c_tests()
 
 

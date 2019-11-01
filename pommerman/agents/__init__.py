@@ -10,4 +10,5 @@ from .berlin_agent import BerlinAgent
 from .cologne_agent import CologneAgent
 from .dortmund_agent import DortmundAgent
 from .eisenach_agent import EisenachAgent
+from .frankfurt_agent import FrankfurtAgent
 from .tensorforce_agent import TensorForceAgent
