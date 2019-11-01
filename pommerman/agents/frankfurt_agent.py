@@ -19,7 +19,8 @@ class FrankfurtAgent(BaseAgent):
 
     def act(self, obs, action_space):
         #for attr in ['alive', 'board', 'bomb_life', 'bomb_blast_strength', 'position', 'blast_strength', 'can_kick', 'teammate', 'ammo', 'enemies']:
-        # new in 2019: game_type, flame_life(map), bomb_moving_direction(map), step_count, game_env
+        #for attr in ['game_type', 'flame_life', 'bomb_moving_direction', 'step_count', 'game_env']:
+        #in radio: message
         #    print(attr, type(obs[attr]), obs[attr])
         #    if 'numpy' in str(type(obs[attr])):
         #        print(' ', obs[attr].dtype)
@@ -32,18 +33,26 @@ class FrankfurtAgent(BaseAgent):
         decision = self.c.c_getStep_frankfurt(
             self.id,
             Item.Agent0.value in obs['alive'], Item.Agent1.value in obs['alive'], Item.Agent2.value in obs['alive'], Item.Agent3.value in obs['alive'],
-            obs['board'].ctypes.data_as(ctypes.POINTER(ctypes.c_uint8)), 
-            obs['bomb_life'].ctypes.data_as(ctypes.POINTER(ctypes.c_double)), 
+            obs['board'].ctypes.data_as(ctypes.POINTER(ctypes.c_uint8)),
+            obs['bomb_life'].ctypes.data_as(ctypes.POINTER(ctypes.c_double)),
             obs['bomb_blast_strength'].ctypes.data_as(ctypes.POINTER(ctypes.c_double)),
+            obs['bomb_moving_direction'].ctypes.data_as(ctypes.POINTER(ctypes.c_double)),
+            obs['flame_life'].ctypes.data_as(ctypes.POINTER(ctypes.c_double)),
             int(obs['position'][0]), int(obs['position'][1]),
             obs['blast_strength'],
             obs['can_kick'],
             obs['ammo'],
-            obs['teammate'].value
+            obs['game_type'],
+            obs['teammate'].value,
+            obs['message'][0] if 'message' in obs else -1,
+            obs['message'][1] if 'message' in obs else -1
             )
         self.turn_times.append(time.time() - start_time)
 
-        return decision
+        if GameType(obs['game_type']) == GameType.TeamRadio:
+            return [decision, self.c.c_getMessage_frankfurt(self.id, 0), self.c.c_getMessage_frankfurt(self.id, 1)]
+        else:
+            return decision
         
 
     def episode_end(self, reward):

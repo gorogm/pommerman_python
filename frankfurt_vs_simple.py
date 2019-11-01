@@ -19,7 +19,8 @@ def main():
         # agents.DockerAgent("pommerman/simple-agent", port=12345),
     ]
     # Make the "Free-For-All" environment using the agent list
-    env = pommerman.make('PommeTeamCompetitionFast-v0', agent_list)
+
+    env = pommerman.make('PommeRadio-v2', agent_list)
 
     wins = 0
     ties = 0
@@ -29,8 +30,6 @@ def main():
     for i_episode in range(nof_plays):
         print("Game " + str(i_episode))
         state = env.reset(i_episode)
-        #if i_episode != 20:
-        #    continue
         done = False
         while not done:
             #env.render()
