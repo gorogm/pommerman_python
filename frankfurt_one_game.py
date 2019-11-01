@@ -13,10 +13,10 @@ def main():
 
     # Create a set of agents (exactly four)
     agent_list = [
-        agents.BerlinAgent(),
-        agents.DortmundAgent(),
-        agents.BerlinAgent(),
-        agents.DortmundAgent(),
+        agents.FrankfurtAgent(),
+        agents.EisenachAgent(),
+        agents.FrankfurtAgent(),
+        agents.EisenachAgent(),
         # agents.DockerAgent("pommerman/simple-agent", port=12345),
     ]
     # Make the "Free-For-All" environment using the agent list
@@ -24,13 +24,13 @@ def main():
 
     # Run the episodes just like OpenAI Gym
     for i_episode in range(1):
-        state = env.reset(1934)
+        state = env.reset(9999)
         done = False
         while not done:
             env.render() #record_json_dir='/tmp/'
             actions = env.act(state)
             state, reward, done, info = env.step(actions)
-            time.sleep(0.3)
+            #time.sleep(0.1)
         print(info)
         print('Episode {} finished'.format(i_episode))
     env.close()

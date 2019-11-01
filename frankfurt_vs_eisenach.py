@@ -1,7 +1,6 @@
 import pommerman
 from pommerman import agents
 import os
-import random
 
 def main():
     '''Simple function to bootstrap a game.
@@ -13,10 +12,10 @@ def main():
 
     # Create a set of agents (exactly four)
     agent_list = [
-        agents.BerlinAgent(),
-        agents.DortmundAgent(),
-        agents.BerlinAgent(),
-        agents.DortmundAgent(),
+        agents.EisenachAgent(),
+        agents.FrankfurtAgent(),
+        agents.EisenachAgent(),
+        agents.FrankfurtAgent(),
         # agents.DockerAgent("pommerman/simple-agent", port=12345),
     ]
     # Make the "Free-For-All" environment using the agent list
@@ -25,7 +24,7 @@ def main():
     wins = 0
     ties = 0
     survived_agents = []
-    nof_plays = 100
+    nof_plays = 80
     # Run the episodes just like OpenAI Gym
     for i_episode in range(nof_plays):
         print("Game " + str(i_episode))
