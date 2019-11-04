@@ -19,7 +19,7 @@ def main():
         # agents.DockerAgent("pommerman/simple-agent", port=12345),
     ]
     # Make the "Free-For-All" environment using the agent list
-    env = pommerman.make('PommeTeamCompetitionFast-v0', agent_list)
+    env = pommerman.make('PommeRadio-v2', agent_list)
 
     wins = 0
     ties = 0
