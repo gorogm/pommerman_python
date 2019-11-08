@@ -30,6 +30,13 @@ class FrankfurtAgent(BaseAgent):
         #print(obs['position'][0])
         #print(type(obs['position'][0]))
         start_time = time.time()
+
+        if isinstance(obs['bomb_moving_direction'], list):
+            obs['bomb_moving_direction'] = np.asarray(obs['bomb_moving_direction'], dtype=np.float32)
+        if isinstance(obs['flame_life'], list):
+            obs['flame_life'] = np.asarray(obs['flame_life'], dtype=np.float32)
+
+
         decision = self.c.c_getStep_frankfurt(
             self.id,
             Item.Agent0.value in obs['alive'], Item.Agent1.value in obs['alive'], Item.Agent2.value in obs['alive'], Item.Agent3.value in obs['alive'],
@@ -87,4 +94,4 @@ class FrankfurtAgent(BaseAgent):
         print("frankfurt shutdown, avg simsteps per turns: ", np.round(np.array(self.avg_simsteps_per_turns).mean())/1000.0, " k",
               ", avg time: ", np.round(turn_times_np.mean()*1000, 1), " ms",
               ", max time: ", np.round(turn_times_np.max()*1000, 1), " ms",
-              ", overtime: ", np.round((turn_times_np > 0.099).sum() / turn_times_np.shape[0] *100, 1), ' %')
+              ", overtime: ", np.round((turn_times_np > 0.149).sum() / turn_times_np.shape[0] *100, 1), ' %')
