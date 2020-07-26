@@ -1,6 +1,7 @@
 from . import BaseAgent
 from .. import characters
 from ..constants import *
+from os import path
 import numpy as np
 import ctypes
 import time
@@ -78,10 +79,15 @@ class FrankfurtAgent(BaseAgent):
         self._character = self._character(id, game_type)
 
         if sys.platform == "win32":
-            self.c = ctypes.cdll.LoadLibrary("build/Release/munchen.dll")
-            # self.c = ctypes.cdll.LoadLibrary("build/Debug/munchen.dll")
+            self.c = ctypes.cdll.LoadLibrary("build/Release/pommerman.dll")
         else:
-            self.c = ctypes.cdll.LoadLibrary("/opt/work/pommerman_cpp/cmake-build-debug/libmunchen.so")
+            possible_paths = ["/opt/work/pommerman_cpp/cmake-build-debug/", "../cmake-build-debug/", "./cmake-build-debug/"]
+            for p in possible_paths:
+                if path.exists(p + "/libpommerman.so"):
+                    self.c = ctypes.cdll.LoadLibrary(p + "/libpommerman.so")
+                    break
+            if not self.c:
+                print("Pommerman C++ library not found")
 
         self.c.c_init_agent_frankfurt(id)
 

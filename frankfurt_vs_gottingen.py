@@ -12,26 +12,25 @@ def main():
 
     # Create a set of agents (exactly four)
     agent_list = [
-        agents.DockerAgent("b3c934102b5b", port=12345),
-        agents.EisenachAgent(),
-        agents.DockerAgent("b3c934102b5b", port=12346),
-        agents.EisenachAgent(),
-        # agents.DockerAgent("pommerman/simple-agent", port=12345),
+        agents.FrankfurtAgent(),
+        agents.GottingenAgent(),
+        agents.FrankfurtAgent(),
+        agents.GottingenAgent(),
     ]
     # Make the "Free-For-All" environment using the agent list
-    env = pommerman.make('PommeTeamCompetitionFast-v0', agent_list)
+    env = pommerman.make('PommeRadio-v2', agent_list)
 
     wins = 0
     ties = 0
     survived_agents = []
-    nof_plays = 10
+    nof_plays = 1
     # Run the episodes just like OpenAI Gym
     for i_episode in range(nof_plays):
         print("Game " + str(i_episode))
         state = env.reset(i_episode)
         done = False
         while not done:
-            #env.render()
+            #env.render() # uncomment this to see graphics
             actions = env.act(state)
             state, reward, done, info = env.step(actions)
 
